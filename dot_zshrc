@@ -1,0 +1,28 @@
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+if [[ -n $SSH_CONNECTION ]]; then
+  ZSH_THEME="peter"
+else
+  ZSH_THEME="robbyrussell"
+fi
+
+plugins=(git z zsh-autosuggestions)
+
+source $ZSH/oh-my-zsh.sh
+
+export PATH=$PATH:/home/peter/go/bin
+export PATH=$PATH:/home/peter/bin
+
+ZSHZ_UNCOMMON=1
+
+alias open="xdg-open"
+
+function list_all() {
+    emulate -L zsh
+    ls -A --color=always
+}
+chpwd_functions=(${chpwd_functions[@]} "list_all")
+
+fastfetch
+ls
