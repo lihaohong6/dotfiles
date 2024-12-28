@@ -1,0 +1,16 @@
+[manager]
+show_hidden = true
+
+[opener]
+play = [
+	{ run = 'flatpak run --command=mpv io.mpv.Mpv "$@"', orphan = true, for = "unix" },
+	{ run = '"D:\ProgramFiles\mpv.net\mpv.exe" %*', orphan = true, for = "windows" }
+]
+edit = [
+	{ run = '$EDITOR "$@"', block = true, for = "unix" },
+	{ run = "%EDITOR% %*",  block = true, for = "windows" },
+]
+open = [
+	{ run = 'xdg-open "$@"', desc = "Open" },
+]
+
