@@ -9,7 +9,10 @@ else
     config.initial_rows = 24;
 end
 
+config.keys = {};
 config.color_scheme = 'Catppuccin Mocha';
+
+local chinese_font_fallback;
 
 if string.find(wezterm.target_triple, 'linux') then
     wezterm.on("setup-panes", function(window, pane)
@@ -27,6 +30,8 @@ if string.find(wezterm.target_triple, 'linux') then
     config.keys = {
         {key="S", mods="CTRL|SHIFT", action=wezterm.action.EmitEvent("setup-panes")},
     }
+
+    chinese_font_fallback = "Noto Sans CJK SC";
 end
 
 if string.find(wezterm.target_triple, 'windows') then
@@ -45,10 +50,42 @@ if string.find(wezterm.target_triple, 'windows') then
             args = { "cmd.exe", "/k", "D:/msys2/msys2_shell.cmd -defterm -here -no-start -ucrt64 -shell zsh"}
         }
     }
-    config.font = wezterm.font_with_fallback {
-        'JetBrains Mono',
-        'Microsoft YaHei'
-    }
+    chinese_font_fallback = "Microsoft YaHei";
 end
+
+config.font = wezterm.font_with_fallback {
+    'JetBrains Mono',
+    chinese_font_fallback
+}
+
+-- Reduce scroll height
+config.mouse_bindings = {
+{
+    event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+    mods = 'NONE',
+    action = wezterm.action.ScrollByLine(-7),
+},
+{
+    event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+    mods = 'NONE',
+    action = wezterm.action.ScrollByLine(7),
+},
+}
+
+-- Use ctrl c and ctrl v for copying and pasting
+table.insert(config.keys, {
+    key = 'c',
+    mods = 'CTRL',
+    action = wezterm.action_callback(function(window, pane)
+        selection_text = window:get_selection_text_for_pane(pane)
+        is_selection_active = string.len(selection_text) ~= 0
+        if is_selection_active then
+            window:perform_action(wezterm.action.CopyTo('ClipboardAndPrimarySelection'), pane)
+        else
+            window:perform_action(wezterm.action.SendKey{ key='c', mods='CTRL' }, pane)
+        end
+    end),
+});
+table.insert(config.keys, { key = 'v', mods = 'CTRL', action = wezterm.action.PasteFrom 'Clipboard' })
 
 return config
