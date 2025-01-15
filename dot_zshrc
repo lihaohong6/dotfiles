@@ -17,6 +17,12 @@ export PATH=$PATH:/home/peter/bin
 ZSHZ_UNCOMMON=1
 
 alias open="xdg-open"
+function mpv() {
+    flatpak run --command=mpv io.mpv.Mpv $@
+}
+function musicfox() {
+    flatpak run --command=musicfox io.github.go_musicfox.go-musicfox $@
+}
 
 function list_all() {
     emulate -L zsh
