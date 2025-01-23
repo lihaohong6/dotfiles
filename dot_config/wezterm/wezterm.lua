@@ -15,7 +15,15 @@ config.color_scheme = 'Catppuccin Mocha';
 
 local chinese_font_fallback;
 
-if string.find(wezterm.target_triple, 'linux') then
+function detect_os(search_string)
+    return string.find(wezterm.target_triple, search_string) ~= nil;
+end
+
+local is_linux = detect_os('linux');
+local is_mac = detect_os('darwin');
+local is_windows = detect_os('windows');
+
+if is_linux then
     wezterm.on("setup-panes", function(window, pane)
         local top_pane = pane:split{ direction = 'Top'};
         local bottom_left_pane = pane:split{ direction = 'Left'};
@@ -35,7 +43,7 @@ if string.find(wezterm.target_triple, 'linux') then
     chinese_font_fallback = "Noto Sans CJK SC";
 end
 
-if string.find(wezterm.target_triple, 'windows') then
+if is_windows then
     config.default_prog = { 'powershell.exe' }
     config.launch_menu = {
         {
@@ -58,6 +66,24 @@ if string.find(wezterm.target_triple, 'windows') then
     chinese_font_fallback = "Microsoft YaHei";
 end
 
+if not is_mac then
+    -- Use ctrl c and ctrl v for copying and pasting on non-macs
+    table.insert(config.keys, {
+        key = 'c',
+        mods = 'CTRL',
+        action = wezterm.action_callback(function(window, pane)
+            selection_text = window:get_selection_text_for_pane(pane)
+            is_selection_active = string.len(selection_text) ~= 0
+            if is_selection_active then
+                window:perform_action(wezterm.action.CopyTo('ClipboardAndPrimarySelection'), pane)
+            else
+                window:perform_action(wezterm.action.SendKey{ key='c', mods='CTRL' }, pane)
+            end
+        end),
+    });
+    table.insert(config.keys, { key = 'v', mods = 'CTRL', action = wezterm.action.PasteFrom 'Clipboard' });
+end
+
 config.font = wezterm.font_with_fallback {
     'JetBrains Mono',
     chinese_font_fallback
@@ -65,33 +91,17 @@ config.font = wezterm.font_with_fallback {
 
 -- Reduce scroll height
 config.mouse_bindings = {
-{
-    event = { Down = { streak = 1, button = { WheelUp = 1 } } },
-    mods = 'NONE',
-    action = wezterm.action.ScrollByLine(-7),
-},
-{
-    event = { Down = { streak = 1, button = { WheelDown = 1 } } },
-    mods = 'NONE',
-    action = wezterm.action.ScrollByLine(7),
-},
+    {
+        event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+        mods = 'NONE',
+        action = wezterm.action.ScrollByLine(-7),
+    },
+    {
+        event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+        mods = 'NONE',
+        action = wezterm.action.ScrollByLine(7),
+    },
 }
-
--- Use ctrl c and ctrl v for copying and pasting
-table.insert(config.keys, {
-    key = 'c',
-    mods = 'CTRL',
-    action = wezterm.action_callback(function(window, pane)
-        selection_text = window:get_selection_text_for_pane(pane)
-        is_selection_active = string.len(selection_text) ~= 0
-        if is_selection_active then
-            window:perform_action(wezterm.action.CopyTo('ClipboardAndPrimarySelection'), pane)
-        else
-            window:perform_action(wezterm.action.SendKey{ key='c', mods='CTRL' }, pane)
-        end
-    end),
-});
-table.insert(config.keys, { key = 'v', mods = 'CTRL', action = wezterm.action.PasteFrom 'Clipboard' })
 
 if backgrounds and #backgrounds > 0 then
     config.background = {

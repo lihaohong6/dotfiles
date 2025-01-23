@@ -1,22 +1,57 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+DISABLE_AUTO_UPDATE=true
+
 if [[ -n $SSH_CONNECTION ]]; then
-  ZSH_THEME="peter"
+    ZSH_THEME="peter"
 else
-  ZSH_THEME="robbyrussell"
+    ZSH_THEME="robbyrussell"
 fi
 
-plugins=(git z zsh-autosuggestions)
-
+# Check zoxide
+if command -v zoxide 2>&1 >/dev/null
+then
+    plugins=(git zsh-autosuggestions)
+    eval "$(zoxide init zsh)"
+else
+    plugins=(git z zsh-autosuggestions)
+fi
 source $ZSH/oh-my-zsh.sh
 
 export PATH=$PATH:/home/peter/go/bin
 export PATH=$PATH:/home/peter/bin
+export PATH=$PATH:/home/peter/.cargo/bin
+
+if command -v nvim 2>&1 >/dev/null
+then
+    EDITOR=nvim
+else
+    EDITOR=vi
+fi
 
 ZSHZ_UNCOMMON=1
 
 alias open="xdg-open"
+
+# flatpak command line aliases
+if command -v flatpak 2>&1 >/dev/null
+then
+    alias musicfox="flatpak run --command=musicfox io.github.go_musicfox.go-musicfox"
+    alias mpv="flatpak run --command=mpv io.mpv.Mpv"
+    alias yazi2="flatpak run --talk-name=org.freedesktop.Flatpak --command=yazi io.github.sxyazi.yazi"
+    alias ya2="flatpak run --command=ya --share=network io.github.sxyazi.yazi"
+fi
+
+# yazi shell wrapper
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 function list_all() {
     emulate -L zsh
