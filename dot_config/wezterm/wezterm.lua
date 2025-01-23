@@ -1,4 +1,5 @@
 local wezterm = require 'wezterm'
+local backgrounds = require 'backgrounds'
 local config = wezterm.config_builder();
 
 config.initial_cols = 120;
@@ -48,6 +49,10 @@ if string.find(wezterm.target_triple, 'windows') then
         {
             label = "msys2 - ucrt64",
             args = { "cmd.exe", "/k", "D:/msys2/msys2_shell.cmd -defterm -here -no-start -ucrt64 -shell zsh"}
+        },
+        {
+            label = "wsl",
+            args = { "powershell.exe", "wsl" }
         }
     }
     chinese_font_fallback = "Microsoft YaHei";
@@ -87,5 +92,22 @@ table.insert(config.keys, {
     end),
 });
 table.insert(config.keys, { key = 'v', mods = 'CTRL', action = wezterm.action.PasteFrom 'Clipboard' })
+
+if backgrounds and #backgrounds > 0 then
+    config.background = {
+        {
+            source = {
+                File = backgrounds[math.random(1, #backgrounds)]
+            },
+            -- width = "Contain",
+            width = "100%",
+            vertical_align = "Middle",
+            horizontal_align = "Center",
+            hsb = {
+                brightness = 0.05
+            }
+        },
+    }
+end
 
 return config
