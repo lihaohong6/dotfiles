@@ -1,5 +1,5 @@
 [plugin]
-deps = [{ use = "yazi-rs/plugins:mime-ext", rev = "e4aaf43" }]
+deps = [{}]
 
 [flavor]
 deps = [{ use = "yazi-rs/flavors:catppuccin-mocha", rev = "8458d25" }, { use = "dangooddd/kanagawa", rev = "b32f205" }]

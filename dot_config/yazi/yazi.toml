@@ -16,9 +16,3 @@ open = [
 	{ run = 'open "%1"', orphan = true, desc = "Open", for = "macos" },
 ]
 
-[[plugin.prepend_fetchers]]
-id   = "mime"
-if   = "!(mime|dummy)"
-name = "*"
-run  = "mime-ext"
-prio = "high"
