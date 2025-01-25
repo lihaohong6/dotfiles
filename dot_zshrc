@@ -32,8 +32,6 @@ fi
 
 ZSHZ_UNCOMMON=1
 
-alias open="xdg-open"
-
 # flatpak command line aliases
 if command -v flatpak 2>&1 >/dev/null
 then
@@ -41,6 +39,8 @@ then
     alias mpv="flatpak run --command=mpv io.mpv.Mpv"
     alias yazi2="flatpak run --talk-name=org.freedesktop.Flatpak --command=yazi io.github.sxyazi.yazi"
     alias ya2="flatpak run --command=ya --share=network io.github.sxyazi.yazi"
+    # if it has flatpak installed, then it is probably linux
+    alias open="xdg-open"
 fi
 
 # yazi shell wrapper
