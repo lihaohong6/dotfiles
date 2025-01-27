@@ -104,21 +104,41 @@ config.mouse_bindings = {
     },
 }
 
-if backgrounds and #backgrounds > 0 then
-    config.background = {
-        {
-            source = {
-                File = backgrounds[math.random(1, #backgrounds)]
-            },
-            -- width = "Contain",
-            width = "100%",
-            vertical_align = "Middle",
-            horizontal_align = "Center",
-            hsb = {
-                brightness = 0.05
-            }
+-- random background
+local bg_index = 0;
+function random_background(index)
+    if index == nil then
+        index = math.random(1, #backgrounds);
+        bg_index = index;
+    end
+    return {
+        source = {
+            File = backgrounds[index]
         },
-    }
+        -- width = "Contain",
+        width = "100%",
+        vertical_align = "Middle",
+        horizontal_align = "Center",
+        hsb = {
+            brightness = 0.05
+        }
+    };
 end
+
+if backgrounds and #backgrounds > 0 then
+    local background = random_background();
+    config.background = {background};
+end
+
+table.insert(config.keys, { key = 'b', mods = 'CTRL|SHIFT', action = wezterm.action_callback(function(window, pane)
+    bg_index = bg_index + 1;
+    if bg_index > #backgrounds then
+        bg_index = 1;
+    end
+    local background = random_background(bg_index);
+    window:set_config_overrides {
+        background = {background};
+    };
+end) });
 
 return config
