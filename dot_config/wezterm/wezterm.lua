@@ -12,6 +12,7 @@ end
 
 config.keys = {};
 config.color_scheme = 'Catppuccin Mocha';
+config.enable_scroll_bar = true;
 
 local chinese_font_fallback;
 
