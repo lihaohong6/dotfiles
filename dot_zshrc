@@ -59,5 +59,9 @@ function list_all() {
 }
 chpwd_functions=(${chpwd_functions[@]} "list_all")
 
-fastfetch
+if [ "$HOSTNAME" = baldr ]; then
+    fastfetch --disk-show-regular false --disk-folders / --localip-show-ipv4 false
+else
+    fastfetch --localip-show-ipv4 false
+fi
 ls
