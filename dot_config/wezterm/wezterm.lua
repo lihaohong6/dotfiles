@@ -116,8 +116,7 @@ function random_background(index)
         source = {
             File = backgrounds[index]
         },
-        -- width = "Contain",
-        width = "100%",
+        height = "Cover",
         vertical_align = "Middle",
         horizontal_align = "Center",
         hsb = {
