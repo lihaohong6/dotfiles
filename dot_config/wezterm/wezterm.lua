@@ -142,4 +142,14 @@ table.insert(config.keys, { key = 'b', mods = 'CTRL|SHIFT', action = wezterm.act
     };
 end) });
 
+table.insert(config.keys, { key = 'h', mods = 'CTRL|SHIFT', action = wezterm.action_callback(function(window, pane)
+    local overrides = window:get_config_overrides() or {};
+    if overrides.background then 
+        overrides.background = nil;
+    else
+        overrides.background = {};
+    end
+    window:set_config_overrides (overrides);
+end)});
+
 return config
