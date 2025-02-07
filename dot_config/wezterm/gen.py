@@ -10,7 +10,7 @@ p = Path("~/Pictures/BG").expanduser().absolute()
 def list_files():
     if p.exists():
         dirs = ["public"]
-        if socket.gethostname() == "Oreki":
+        if socket.gethostname().lower() == "oreki":
             dirs.append("private")
             print("On home computer")
         else:
