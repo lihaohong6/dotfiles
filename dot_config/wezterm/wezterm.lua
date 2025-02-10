@@ -91,6 +91,8 @@ config.font = wezterm.font_with_fallback {
     chinese_font_fallback
 }
 
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
+
 -- Reduce scroll height
 config.mouse_bindings = {
     {
