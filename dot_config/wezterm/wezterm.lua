@@ -143,6 +143,13 @@ table.insert(config.keys, { key = 'b', mods = 'CTRL|SHIFT', action = wezterm.act
     };
 end) });
 
+table.insert(config.keys, { key = 'g', mods = 'CTRL|SHIFT', action = wezterm.action_callback(function(window, pane)
+    local background = random_background();
+    window:set_config_overrides {
+        background = {background};
+    };
+end) });
+
 table.insert(config.keys, { key = 'h', mods = 'CTRL|SHIFT', action = wezterm.action_callback(function(window, pane)
     local overrides = window:get_config_overrides() or {};
     if overrides.background then 
