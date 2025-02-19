@@ -43,6 +43,11 @@ then
     alias open="xdg-open"
 fi
 
+if command -v bat 2>&1 >/dev/null
+then
+    alias cat=bat
+fi
+
 # yazi shell wrapper
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
