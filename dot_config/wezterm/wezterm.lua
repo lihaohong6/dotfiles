@@ -40,7 +40,7 @@ if is_linux then
     config.keys = {
         {key="S", mods="CTRL|SHIFT", action=wezterm.action.EmitEvent("setup-panes")},
     }
-
+    
     chinese_font_fallback = "Noto Sans CJK SC";
 end
 
@@ -65,6 +65,11 @@ if is_windows then
         }
     }
     chinese_font_fallback = "Microsoft YaHei";
+end
+
+if is_mac then
+    table.insert(config.keys,{key="LeftArrow", mods="OPT", action=wezterm.action.SendString("\x1bb")});
+    table.insert(config.keys,{key="RightArrow", mods="OPT", action=wezterm.action.SendString("\x1bf")});
 end
 
 if not is_mac then
