@@ -30,7 +30,7 @@ def list_files():
 def download():
     if not p.exists():
         print("Cloning image repo from gh")
-        subprocess.run(["gh", "repo", "clone", "BG"], 
+        subprocess.run(["gh", "repo", "clone", "BG", "--", "--depth=1"], 
                        cwd=p.parent,
                        check=True)
     else:
