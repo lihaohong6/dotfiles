@@ -31,7 +31,7 @@ if is_linux then
         local top_right_pane = top_pane:split{ direcion = 'Right'};
       
         -- Run commands in each pane
-        window:perform_action(wezterm.action.SendString("dstat -pcmrd\n"), top_right_pane)
+        window:perform_action(wezterm.action.SendString("dstat -cmd\n"), top_right_pane)
         window:perform_action(wezterm.action.SendString("htop\n"), top_pane)
         -- window:perform_action(wezterm.action.SendString("ls\n"), bottom_left_pane)
         window:perform_action(wezterm.action.SendString("musicfox\n"), pane)
