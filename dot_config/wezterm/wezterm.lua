@@ -68,6 +68,7 @@ if is_windows then
 end
 
 if is_mac then
+    config.font_size = 15 
     table.insert(config.keys,{key="LeftArrow", mods="OPT", action=wezterm.action.SendString("\x1bb")});
     table.insert(config.keys,{key="RightArrow", mods="OPT", action=wezterm.action.SendString("\x1bf")});
 end
