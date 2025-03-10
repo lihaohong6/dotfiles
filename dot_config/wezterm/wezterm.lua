@@ -158,8 +158,13 @@ end) });
 
 table.insert(config.keys, { key = 'h', mods = 'CTRL|SHIFT', action = wezterm.action_callback(function(window, pane)
     local overrides = window:get_config_overrides() or {};
-    if overrides.background then 
-        overrides.background = nil;
+    if overrides.background then
+        if overrides.color_scheme then
+	    overrides.color_scheme = nil;
+            overrides.background = nil;
+	else
+	    overrides.color_scheme = "";
+	end
     else
         overrides.background = {};
     end
