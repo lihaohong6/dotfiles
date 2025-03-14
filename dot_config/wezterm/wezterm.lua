@@ -1,5 +1,9 @@
 local wezterm = require 'wezterm'
-local backgrounds = require 'backgrounds'
+local background_loaded, backgrounds = pcall(require, 'backgrounds')
+if not background_loaded then
+    backgrounds = {};
+end
+
 local config = wezterm.config_builder();
 
 config.initial_cols = 120;
