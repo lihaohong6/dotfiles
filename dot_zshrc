@@ -32,6 +32,10 @@ fi
 
 ZSHZ_UNCOMMON=1
 
+function perfparser() {
+    hotspot $1 --exportTo $2
+} 
+
 # flatpak command line aliases
 if command -v flatpak 2>&1 >/dev/null
 then
