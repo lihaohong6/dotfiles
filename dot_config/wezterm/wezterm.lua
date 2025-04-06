@@ -6,8 +6,6 @@ end
 
 local config = wezterm.config_builder();
 
-config.initial_cols = 120;
-
 config.keys = {};
 config.color_scheme = 'Catppuccin Mocha';
 config.enable_scroll_bar = true;
@@ -22,6 +20,7 @@ local is_linux = detect_os('linux');
 local is_mac = detect_os('darwin');
 local is_windows = detect_os('windows');
 
+config.initial_cols = 120;
 if is_mac then
     config.initial_rows = 30;
 else
@@ -34,6 +33,10 @@ function fast_tab_navigation()
     for i=1,9 do
         table.insert(config.keys, {key=tostring(i), mods="ALT", action=wezterm.action.MoveTab(i - 1)});
     end
+end
+
+if not is_mac then
+    fast_tab_navigation()
 end
 
 if is_linux then
@@ -52,8 +55,6 @@ if is_linux then
     table.insert(config.keys, {key="S", mods="CTRL|SHIFT", action=wezterm.action.EmitEvent("setup-panes")});
     
     chinese_font_fallback = "Noto Sans CJK SC";
-
-    fast_tab_navigation();
 end
 
 if is_windows then
@@ -77,8 +78,6 @@ if is_windows then
         }
     }
     chinese_font_fallback = "Microsoft YaHei";
- 
-    fast_tab_navigation();
 end
 
 if is_mac then
