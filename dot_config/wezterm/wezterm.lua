@@ -31,8 +31,9 @@ config.keys = {};
 
 function fast_tab_navigation()
     for i=1,9 do
-        table.insert(config.keys, {key=tostring(i), mods="ALT", action=wezterm.action.MoveTab(i - 1)});
+        table.insert(config.keys, {key=tostring(i), mods="ALT", action=wezterm.action.ActivateTab(i - 1)});
     end
+    table.insert(config.keys, {key='t', mods="ALT", action=wezterm.action.SpawnTab 'DefaultDomain'});
 end
 
 if not is_mac then
