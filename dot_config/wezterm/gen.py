@@ -12,6 +12,7 @@ def list_files():
         dirs = ["public"]
         if socket.gethostname().lower() == "oreki":
             dirs.append("private")
+            dirs.insert(0, "staging")
             print("On home computer")
         else:
             print("Not on home computer")
