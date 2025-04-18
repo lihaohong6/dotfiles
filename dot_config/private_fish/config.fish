@@ -1,4 +1,8 @@
 if status is-interactive
+    set -l os (uname)
+    set EDITOR vim
+    set fish_greeting
+
     function __ls_after_cd__on_variable_pwd --on-variable PWD
         ls -AGF
     end
@@ -20,7 +24,7 @@ if status is-interactive
     	rm -f -- "$tmp"
     end
 
-    if test uname = "Linux"
+    if test "$os" = "Linux"
         abbr --add open xdg-open
         function musicfox
             flatpak run --command=musicfox io.github.go_musicfox.go-musicfox
@@ -31,6 +35,8 @@ if status is-interactive
 
     if test "$hostname" = "baldr"
         fastfetch --disk-show-regular false --disk-folders / --localip-show-ipv4 false
+    else if test "$os" = "Darwin"
+        fastfetch --structure Title:Separator:OS:Host:Kernel:Uptime:Packages:Shell:Cursor:Terminal:CPU:GPU:Memory:Swap:Disk:LocalIp:Battery:PowerAdapter:Locale:Break:Colors
     else
         fastfetch --localip-show-ipv4 false
     end
