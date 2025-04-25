@@ -19,6 +19,7 @@ end
 local is_linux = detect_os('linux');
 local is_mac = detect_os('darwin');
 local is_windows = detect_os('windows');
+local hostname = wezterm.hostname();
 
 config.initial_cols = 120;
 if is_mac then
@@ -86,7 +87,7 @@ if is_mac then
     table.insert(config.keys,{key="LeftArrow", mods="OPT", action=wezterm.action.SendString("\x1bb")});
     table.insert(config.keys,{key="RightArrow", mods="OPT", action=wezterm.action.SendString("\x1bf")});
 
-    chinese_font_fallback = "Noto Sans CJK SC";
+    chinese_font_fallback = "Noto Sans SC";
 end
 
 if not is_mac then
@@ -106,6 +107,10 @@ if not is_mac then
         end),
     });
     table.insert(config.keys, { key = 'v', mods = 'CTRL', action = wezterm.action.PasteFrom 'Clipboard' });
+end
+
+if hostname == "tamako" then
+    config.default_prog = "/usr/bin/fish";
 end
 
 config.font = wezterm.font_with_fallback {
