@@ -109,8 +109,8 @@ if not is_mac then
     table.insert(config.keys, { key = 'v', mods = 'CTRL', action = wezterm.action.PasteFrom 'Clipboard' });
 end
 
-if hostname == "tamako" then
-    config.default_prog = "/usr/bin/fish";
+if is_linux then
+    config.default_prog = {"/usr/bin/fish"};
 end
 
 config.font = wezterm.font_with_fallback {
