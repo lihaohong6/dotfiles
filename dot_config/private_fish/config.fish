@@ -1,7 +1,7 @@
 if status is-interactive
     set -l os (uname)
-    set EDITOR vim
-    set fish_greeting
+    set -x EDITOR vim
+    set fish_greeting 🐟
 
     function __ls_after_cd__on_variable_pwd --on-variable PWD
         ls -AGF
