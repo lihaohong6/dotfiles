@@ -12,7 +12,7 @@ edit = [
 ]
 open = [
 	{ run = 'xdg-open "$@"', orphan = true, desc = "Open", for = "linux" },
-	{ run = 'start %*', orphan = true, desc = "Open", for = "windows" },
+	{ run = 'start "" %*', orphan = true, desc = "Open", for = "windows" },
 	{ run = 'open "$0"', orphan = true, desc = "Open", for = "macos" },
 ]
 
