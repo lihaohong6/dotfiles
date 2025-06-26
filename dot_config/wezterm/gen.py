@@ -9,12 +9,11 @@ p = Path("~/Pictures/BG").expanduser().absolute()
 
 def list_files():
     if p.exists():
-        dirs = ["public"]
         if socket.gethostname().lower() == "oreki":
-            dirs.append("private")
-            dirs.insert(0, "staging")
+            dirs = ["private", "staging"]
             print("On home computer")
         else:
+            dirs = ["public"]
             print("Not on home computer")
         files = list(chain(*[(p / dir).iterdir() for dir in dirs]))
         
