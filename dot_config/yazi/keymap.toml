@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 prepend_keymap = [
   { on = "z", run = "plugin zoxide" },
   { on = "Z", run = "plugin fzf" },
