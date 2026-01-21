@@ -1,7 +1,7 @@
 if status is-interactive
     set -l os (uname)
-    set -x EDITOR vim
-    set fish_greeting 🐟
+    set EDITOR vim
+    set fish_greeting
 
     function __ls_after_cd__on_variable_pwd --on-variable PWD
         ls -AGF
@@ -10,6 +10,7 @@ if status is-interactive
     fish_add_path $HOME/go/bin
     fish_add_path $HOME/bin
     fish_add_path $HOME/.cargo/bin
+    fish_add_path $HOME/.local/bin
 
     function perfparser
         hotspot $1 --exportTo $2
@@ -38,7 +39,7 @@ if status is-interactive
     else if test "$os" = "Darwin"
         fastfetch --structure Title:Separator:OS:Host:Kernel:Uptime:Packages:Shell:Cursor:Terminal:CPU:GPU:Memory:Swap:Disk:LocalIp:Battery:PowerAdapter:Locale:Break:Colors
     else
-        fastfetch --localip-show-ipv4 false
+        fastfetch
     end
 end
 
