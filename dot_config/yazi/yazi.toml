@@ -3,16 +3,21 @@ show_hidden = true
 
 [opener]
 play = [
-	{ run = 'mpv "$@"', orphan = true, for = "linux" },
+	{ run = 'mpv %s', orphan = true, for = "linux" },
 	{ run = 'D:\ProgramFiles\mpv.net\mpvnet.exe %*', orphan = true, for = "windows" },
 ]
 edit = [
-	{ run = '$EDITOR "$@"', block = true, for = "unix" },
+	{ run = '$EDITOR %s', block = true, for = "unix" },
 	{ run = "%EDITOR% %*",  block = true, for = "windows" },
 ]
 open = [
-	{ run = 'xdg-open "$@"', orphan = true, desc = "Open", for = "linux" },
+	{ run = 'xdg-open %s1', orphan = true, desc = "Open", for = "linux" },
 	{ run = 'start "" %*', orphan = true, desc = "Open", for = "windows" },
-	{ run = 'open "$0"', orphan = true, desc = "Open", for = "macos" },
+	{ run = 'open %s', orphan = true, desc = "Open", for = "macos" },
+]
+
+[open]
+prepend_rules = [
+	{ url = "*/", use = "open" },
 ]
 
